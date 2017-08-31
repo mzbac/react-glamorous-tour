@@ -1,0 +1,49 @@
+{
+  "name": "react-glamorous-tour",
+  "version": "0.0.1",
+  "description": "react tour component",
+  "main": "lib/index.js",
+  "scripts": {
+    "prebuild": "rimraf lib/*",
+    "build": "babel --out-dir lib src",
+    "test": "jest --config=jest.config.json",
+    "test:coverage": "jest --config=jest.config.json --coverage && open coverage/index.html",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzbac/react-glamorous-tour.git"
+  },
+  "keywords": [
+    "react",
+    "walkthrough",
+    "tour",
+    "glamorous"
+  ],
+  "author": "anchen.li",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mzbac/react-glamorous-tour/issues"
+  },
+  "homepage": "https://github.com/mzbac/react-glamorous-tour#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^20.0.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^2.9.1",
+    "enzyme-to-json": "^1.5.1",
+    "jest": "^20.0.4",
+    "jest-glamor-react": "^3.1.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
+    "rimraf": "^2.6.1"
+  },
+  "dependencies": {
+    "glamor": "^2.20.40",
+    "glamorous": "^4.2.0"
+  }
+}
