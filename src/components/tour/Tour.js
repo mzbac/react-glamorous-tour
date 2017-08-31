@@ -5,12 +5,19 @@ import TourBox from './TourBox';
 import PropTypes from 'prop-types';
 
 const Tour = props => {
-  const { overlayStyles, highlightStyles, tourboxStyles, steps } = props;
-
+  const {
+    overlayStyles,
+    highlightStyles,
+    tourboxStyles,
+    currentStep,
+    currentStepElm,
+    ...restProps
+  } = props;
   return (
     <TourOverlayLayer overlayStyles={overlayStyles}>
-      <TourHighlightLayer highlightStyles={highlightStyles}>
-        <TourBox tourboxStyles={tourboxStyles} />
+      <TourHighlightLayer highlightStyles={highlightStyles} currentStepElm={currentStepElm}>
+        <TourBox tourboxStyles={tourboxStyles} currentStepElm={currentStepElm}
+                 currentStep={currentStep} {...restProps} />
       </TourHighlightLayer>
     </TourOverlayLayer>
   );

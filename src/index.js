@@ -1,3 +1,4 @@
-/**
- * Created by anchen on 31/08/17.
- */
+import TourProvider from './components/TourProvider';
+import Step from './components/Step';
+
+export { TourProvider, Step };
