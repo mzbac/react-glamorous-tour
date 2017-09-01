@@ -122,7 +122,9 @@ class TourProvider extends Component {
 
     renderSubtreeIntoContainer(this,
       <Tour {...tourProps}>
-        {tourContent ? tourContent : <DefaultTourBox {...tourBoxProps} />}
+        <DefaultTourBox {...tourBoxProps}>
+          {tourContent}
+        </DefaultTourBox>
       </Tour>, portalNodes[group].node)
   }
 

@@ -45,8 +45,13 @@ const CardButton = glamorous.button({
   }
 });
 
+const CustomTourboxContainer = glamorous.div({
+  position: 'relative'
+});
+
 const TourBox = props => {
   const {
+    children,
     currentStepElm,
     currentStep,
     currentIdx,
@@ -57,7 +62,15 @@ const TourBox = props => {
     done
   } = props;
   if (!currentStepElm) return null;
-  const { position, arrow, visible = true, positionMargin = 20, width = '20rem', title, text } = currentStep;
+  const {
+    position,
+    arrow,
+    visible = true,
+    positionMargin = 20,
+    width = '20rem',
+    title,
+    text
+  } = currentStep;
   return (
     <Tooltip
       visible={visible}
@@ -66,7 +79,7 @@ const TourBox = props => {
       position={position}
       arrow={arrow}
     >
-      <Card width={width}>
+      {children ? <CustomTourboxContainer>{children}</CustomTourboxContainer> : <Card width={width}>
         <CardBody>
           <CardTitle>{title}</CardTitle>
           <CardText>
@@ -79,7 +92,7 @@ const TourBox = props => {
             <CardButton onClick={goNext}>Next</CardButton>
           </CardButtons>
         </CardBody>
-      </Card>
+      </Card>}
     </Tooltip>
   );
 };
