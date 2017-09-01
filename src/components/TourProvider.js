@@ -47,12 +47,12 @@ class TourProvider extends Component {
 
   goNext() {
     if (!this.stepController) return;
-    if (this.stepController.goNext()) this.renderTour();
+    if (this.stepController.goNext() !== undefined) this.renderTour();
   }
 
   goPrevious() {
     if (!this.stepController) return;
-    if (this.stepController.goPrevious()) this.renderTour();
+    if (this.stepController.goPrevious() !== undefined) this.renderTour();
   }
 
   dismiss() {
@@ -100,7 +100,7 @@ class TourProvider extends Component {
     if (!currentStepElm.node) {
       currentStepElm.node = document.querySelector(currentStep.selector);
     }
-    if (!currentStepElm) return;
+    if (!currentStepElm.node) return;
     let tourContent = null;
     const tourBoxProps = {
       currentStep,

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { REACT_GLAMOROUS_TOUR } from './constants'
 
@@ -6,12 +7,13 @@ export default (WrappedComponent, selector) => {
   class connectedStep extends Component {
     componentDidMount() {
       const steps = this.context[REACT_GLAMOROUS_TOUR].getSteps();
+      const node = findDOMNode(this);
       steps.push({
         selector,
-        node: this.self,
+        node,
       });
       this.context[REACT_GLAMOROUS_TOUR].setSteps(steps);
-      if (this.self) this.self.setAttribute('react-glamorous-tour-step-id', selector);
+      if (node) node.setAttribute('react-glamorous-tour-step-id', selector);
     }
 
     componentWillUnmount() {
@@ -20,9 +22,7 @@ export default (WrappedComponent, selector) => {
     }
 
     render() {
-      return <WrappedComponent ref={(self) => {
-        this.self = self;
-      }} {...this.props} />;
+      return <WrappedComponent  {...this.props} />;
     }
   }
 
