@@ -18,7 +18,7 @@ class TourController {
     this.idx = this.idx - 1;
   }
 
-  getCurretIdx() {
+  getCurrentIdx() {
     return this.idx;
   }
 

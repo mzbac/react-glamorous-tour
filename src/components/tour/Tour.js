@@ -1,24 +1,24 @@
 import React from 'react';
 import TourOverlayLayer from './TourOverlayLayer';
 import TourHighlightLayer from './TourHighlightLayer';
-import TourBox from './TourBox';
 import PropTypes from 'prop-types';
 
 const Tour = props => {
   const {
+    children,
     overlayStyles,
     highlightStyles,
-    tourboxStyles,
-    currentStep,
     currentStepElm,
-    ...restProps
+    highlightDelay = 300,
   } = props;
   return (
     <TourOverlayLayer overlayStyles={overlayStyles}>
-      <TourHighlightLayer highlightStyles={highlightStyles} currentStepElm={currentStepElm}>
-        <TourBox tourboxStyles={tourboxStyles} currentStepElm={currentStepElm}
-                 currentStep={currentStep} {...restProps} />
-      </TourHighlightLayer>
+      {children}
+      <TourHighlightLayer
+        highlightStyles={highlightStyles}
+        currentStepElm={currentStepElm}
+        highlightDelay={highlightDelay}
+      />
     </TourOverlayLayer>
   );
 };

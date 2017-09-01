@@ -59,7 +59,7 @@ const Highlight = glamorous.div(props => {
   return {
     position: 'absolute',
     boxSizing: 'content-box',
-    zIndex: 999999,
+    zIndex: 1001,
     transition: 'all .3s ease-out',
     backgroundColor: 'rgba(255,255,255,.9)',
     border: '1px solid rgba(0,0,0,.5)',
@@ -76,18 +76,25 @@ class TourHighlightLayer extends Component {
   }
 
   componentDidMount() {
-    const { currentStepElm } = this.props;
+    const { currentStepElm, highlightDelay } = this.props;
     this.originalElmStyle = { ...currentStepElm.style };
-    currentStepElm.style.position = 'relative';
-    currentStepElm.style.zIndex = '99999999999';
+    //hacky need to fix
+    setTimeout(() => {
+      currentStepElm.style.position = 'relative';
+      currentStepElm.style.zIndex = '1002';
+    }, highlightDelay);
+
   }
 
   componentWillReceiveProps(nextProps) {
     const { currentStepElm } = this.props;
     currentStepElm.style = { ...this.originalElmStyle };
     this.originalElmStyle = { ...nextProps.currentStepElm.style };
-    nextProps.currentStepElm.style.position = 'relative';
-    nextProps.currentStepElm.style.zIndex = '99999999999';
+    //hacky need to fix
+    setTimeout(() => {
+      nextProps.currentStepElm.style.position = 'relative';
+      nextProps.currentStepElm.style.zIndex = '1002';
+    },nextProps.highlightDelay);
   }
 
   componentWillUnmount() {
@@ -96,12 +103,9 @@ class TourHighlightLayer extends Component {
   }
 
   render() {
-    const { children, highlightStyles, currentStepElm } = this.props;
+    const { highlightStyles, currentStepElm } = this.props;
 
-    return (
-      <Highlight highlightStyles={highlightStyles} currentStepElm={currentStepElm}>
-        {children}
-      </Highlight>);
+    return <Highlight highlightStyles={highlightStyles} currentStepElm={currentStepElm} />;
   }
 }
 

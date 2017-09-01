@@ -1,6 +1,7 @@
 import React, { Component, Children } from 'react';
 import { unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer } from 'react-dom'
 import Tour from './tour/Tour';
+import DefaultTourBox from './tour/TourBox';
 import TourController from '../utils/TourController';
 
 import { REACT_GLAMOROUS_TOUR } from './constants';
@@ -17,8 +18,11 @@ class TourProvider extends Component {
     this.setSteps = this.setSteps.bind(this);
     this.getSteps = this.getSteps.bind(this);
     this.renderTour = this.renderTour.bind(this);
+    this.unmountTour = this.unmountTour.bind(this);
     this.goNext = this.goNext.bind(this);
     this.goPrevious = this.goPrevious.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this.done = this.done.bind(this);
   }
 
   getChildContext() {
@@ -44,17 +48,38 @@ class TourProvider extends Component {
   goNext() {
     if (!this.stepController) return;
     this.stepController.goNext();
+    this.renderTour();
   }
 
   goPrevious() {
     if (!this.stepController) return;
     this.stepController.goPrevious();
+    this.renderTour();
   }
 
-  setSteps = steps => {
+  dismiss() {
+    const { onDismiss } = this.props;
+    if (onDismiss) onDismiss(this.stepController.getCurrentStep());
+    this.unmountTour();
+  }
+
+  done() {
+    const { onDone } = this.props;
+    if (onDone) onDone({
+      currentIdx: this.stepController.getCurrentIdx(),
+      totalStepNum: this.stepController.getTotalStepNum(),
+      currentStep: this.stepController.getCurrentStep(),
+    });
+    this.unmountTour();
+  }
+
+  setSteps(steps) {
     this.steps = steps;
   };
-  getSteps = () => this.steps;
+
+  getSteps() {
+    return this.steps;
+  }
 
   createPortal() {
     portalNodes[this.props.group] = {
@@ -64,7 +89,8 @@ class TourProvider extends Component {
   }
 
   renderTour() {
-    if (!portalNodes[this.props.group]) {
+    const { group, tourBox } = this.props;
+    if (!portalNodes[group]) {
       this.createPortal()
     }
     if (!this.stepController) return;
@@ -77,6 +103,18 @@ class TourProvider extends Component {
       currentStepElm.node = document.querySelector(currentStep.selector);
     }
     if (!currentStepElm) return;
+    let tourContent = null;
+    const tourBoxProps = {
+      currentStep,
+      currentStepElm: currentStepElm.node,
+      goNext: this.goNext,
+      goPrevious: this.goPrevious,
+      currentIdx: this.stepController.getCurrentIdx(),
+      totalStepNum: this.stepController.getTotalStepNum(),
+      dismiss: this.dismiss,
+      done: this.done,
+    };
+    if (tourBox) tourContent = tourBox(tourBoxProps);
     const tourProps = {
       currentStep,
       currentStepElm: currentStepElm.node,
@@ -84,7 +122,16 @@ class TourProvider extends Component {
       goPrevious: this.goPrevious,
     };
 
-    renderSubtreeIntoContainer(this, <Tour {...tourProps} />, portalNodes[this.props.group].node)
+    renderSubtreeIntoContainer(this,
+      <Tour {...tourProps}>
+        {tourContent ? tourContent : <DefaultTourBox {...tourBoxProps} />}
+      </Tour>, portalNodes[group].node)
+  }
+
+  unmountTour() {
+    const { group } = this.props;
+    renderSubtreeIntoContainer(this,
+      <div />, portalNodes[group].node)
   }
 
   render() {
