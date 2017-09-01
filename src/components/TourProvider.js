@@ -47,14 +47,12 @@ class TourProvider extends Component {
 
   goNext() {
     if (!this.stepController) return;
-    this.stepController.goNext();
-    this.renderTour();
+    if (this.stepController.goNext()) this.renderTour();
   }
 
   goPrevious() {
     if (!this.stepController) return;
-    this.stepController.goPrevious();
-    this.renderTour();
+    if (this.stepController.goPrevious()) this.renderTour();
   }
 
   dismiss() {

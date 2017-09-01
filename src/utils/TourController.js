@@ -11,11 +11,13 @@ class TourController {
   goNext() {
     if (this.idx + 2 > this.steps.length) return;
     this.idx = this.idx + 1;
+    return this.idx;
   }
 
   goPrevious() {
     if (this.idx < 1) return;
     this.idx = this.idx - 1;
+    return this.idx;
   }
 
   getCurrentIdx() {
