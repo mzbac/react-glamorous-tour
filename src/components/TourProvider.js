@@ -17,6 +17,7 @@ class TourProvider extends Component {
     this.isConfigured = false;
     this.setSteps = this.setSteps.bind(this);
     this.getSteps = this.getSteps.bind(this);
+    this.getIsConfigured = this.getIsConfigured.bind(this);
     this.renderTour = this.renderTour.bind(this);
     this.unmountTour = this.unmountTour.bind(this);
     this.goNext = this.goNext.bind(this);
@@ -30,6 +31,13 @@ class TourProvider extends Component {
       [REACT_GLAMOROUS_TOUR]: {
         setSteps: this.setSteps,
         getSteps: this.getSteps,
+        getIsConfigured: this.getIsConfigured,
+        renderTour: this.renderTour,
+        unmountTour: this.unmountTour,
+        goNext: this.goNext,
+        goPrevious: this.goPrevious,
+        dismiss: this.dismiss,
+        done: this.done
       }
     };
   }
@@ -69,6 +77,10 @@ class TourProvider extends Component {
       currentStep: this.stepController.getCurrentStep(),
     });
     this.unmountTour();
+  }
+
+  getIsConfigured() {
+    return this.isConfigured;
   }
 
   setSteps(steps) {
@@ -147,6 +159,13 @@ TourProvider.childContextTypes = {
   [REACT_GLAMOROUS_TOUR]: PropTypes.shape({
     setSteps: PropTypes.func.isRequired,
     getSteps: PropTypes.func.isRequired,
+    getIsConfigured: PropTypes.func.isRequired,
+    renderTour:PropTypes.func.isRequired,
+    unmountTour: PropTypes.func.isRequired,
+    goNext: PropTypes.func.isRequired,
+    goPrevious: PropTypes.func.isRequired,
+    dismiss: PropTypes.func.isRequired,
+    done: PropTypes.func.isRequired,
   }),
 };
 export default TourProvider;

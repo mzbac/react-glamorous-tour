@@ -134,3 +134,59 @@ step = {
     <App />
   </TourProvider>
   ```
+# Using Control to get control methods of tour.
+```jsx
+import { TourProvider, Step, Control } from "react-glamorous-tour";
+
+const ControlButton = Control((props) => {
+  const {
+    tourIsConfigured,
+    renderTour,
+    unmountTour,
+    goNext,
+    goPrevious,
+    dismiss,
+    done,
+  } = props;
+  return <button onClick={() => {
+    if (tourIsConfigured()) renderTour()
+  }}>tour start</button>;
+});
+class App extends Component {
+  render() {
+    return (
+      <TourProvider
+        active
+        steps={
+          [
+            {
+              selector: "step1",
+              title: "Hello world!",
+              text: "welcome to the first step of react-glamorous-tour"
+            },
+            {
+              selector: "step2",
+              title: "Second step!",
+              text: "welcome to the second step of react-glamorous-tour"
+            }
+          ]
+        }
+      >
+        <div className="App">
+          <div className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <Step1>Welcome to React</Step1>
+          </div>
+
+          <Step2 className="App-intro">
+            To get started, edit <code>src/App.js</code> and save to reload.
+          </Step2>
+          <ControlButton />
+        </div>
+      </TourProvider>
+    );
+  }
+}
+
+export default App;
+```

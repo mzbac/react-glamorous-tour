@@ -30,6 +30,13 @@ export default (WrappedComponent, selector) => {
     [REACT_GLAMOROUS_TOUR]: PropTypes.shape({
       setSteps: PropTypes.func.isRequired,
       getSteps: PropTypes.func.isRequired,
+      getIsConfigured: PropTypes.func.isRequired,
+      renderTour:PropTypes.func.isRequired,
+      unmountTour: PropTypes.func.isRequired,
+      goNext: PropTypes.func.isRequired,
+      goPrevious: PropTypes.func.isRequired,
+      dismiss: PropTypes.func.isRequired,
+      done: PropTypes.func.isRequired,
     }),
   };
   return connectedStep;
