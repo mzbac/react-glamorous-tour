@@ -4,6 +4,10 @@ class TourController {
     this.idx = 0;
   }
 
+  done() {
+    this.idx = 0;
+  }
+
   getCurrentStep() {
     return this.steps[this.idx];
   }

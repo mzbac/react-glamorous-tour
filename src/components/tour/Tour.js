@@ -8,9 +8,11 @@ const Tour = props => {
     children,
     overlayStyles,
     highlightStyles,
+    activeTour,
     currentStepElm,
     highlightDelay = 300,
   } = props;
+  if (!activeTour) return null;
   return (
     <TourOverlayLayer overlayStyles={overlayStyles}>
       {children}

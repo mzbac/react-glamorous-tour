@@ -76,6 +76,7 @@ class TourProvider extends Component {
       totalStepNum: this.stepController.getTotalStepNum(),
       currentStep: this.stepController.getCurrentStep(),
     });
+    this.stepController.done();
     this.unmountTour();
   }
 
@@ -98,7 +99,7 @@ class TourProvider extends Component {
     document.body.appendChild(portalNodes[this.props.group].node)
   }
 
-  renderTour() {
+  renderTour(activeTour = true) {
     const { group, tourBox } = this.props;
     if (!portalNodes[group]) {
       this.createPortal()
@@ -126,6 +127,7 @@ class TourProvider extends Component {
     };
     if (tourBox) tourContent = tourBox(tourBoxProps);
     const tourProps = {
+      activeTour,
       currentStep,
       currentStepElm: currentStepElm.node,
       goNext: this.goNext,
@@ -141,9 +143,8 @@ class TourProvider extends Component {
   }
 
   unmountTour() {
-    const { group } = this.props;
-    renderSubtreeIntoContainer(this,
-      <div />, portalNodes[group].node)
+    const activeTour = false;
+    this.renderTour(activeTour);
   }
 
   render() {
@@ -160,7 +161,7 @@ TourProvider.childContextTypes = {
     setSteps: PropTypes.func.isRequired,
     getSteps: PropTypes.func.isRequired,
     getIsConfigured: PropTypes.func.isRequired,
-    renderTour:PropTypes.func.isRequired,
+    renderTour: PropTypes.func.isRequired,
     unmountTour: PropTypes.func.isRequired,
     goNext: PropTypes.func.isRequired,
     goPrevious: PropTypes.func.isRequired,

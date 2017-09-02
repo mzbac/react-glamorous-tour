@@ -79,7 +79,7 @@ class TourHighlightLayer extends Component {
     const { currentStepElm, highlightDelay } = this.props;
     this.originalElmStyle = { ...currentStepElm.style };
     //hacky need to fix
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       currentStepElm.style.position = 'relative';
       currentStepElm.style.zIndex = '1002';
     }, highlightDelay);
@@ -91,15 +91,16 @@ class TourHighlightLayer extends Component {
     currentStepElm.style = { ...this.originalElmStyle };
     this.originalElmStyle = { ...nextProps.currentStepElm.style };
     //hacky need to fix
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       nextProps.currentStepElm.style.position = 'relative';
       nextProps.currentStepElm.style.zIndex = '1002';
-    },nextProps.highlightDelay);
+    }, nextProps.highlightDelay);
   }
 
   componentWillUnmount() {
+    clearTimeout(this.timer);
     const { currentStepElm } = this.props;
-    currentStepElm.steps = { ...this.originalElmStyle };
+    currentStepElm.style = { ...this.originalElmStyle };
   }
 
   render() {
